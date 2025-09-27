@@ -1,0 +1,42 @@
+n8n-render/
+n8n-n8n-1.108.2/
+
+# ======================
+# Environment Variables
+# ======================
+.env
+.env.*
+
+# ======================
+# n8n Data Storage
+# ======================
+# Local workflow & user data (use Render's volume, not Git)
+n8n_data/
+home/node/.n8n/
+
+# ======================
+# Logs
+# ======================
+*.log
+logs/
+debug.log
+
+# ======================
+# Docker
+# ======================
+# Ignore docker build caches and temporary files
+*.pid
+*.seed
+*.pid.lock
+
+# ======================
+# System Files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Node.js dependencies (if any local scripts)
+# ======================
+node_modules/
+
