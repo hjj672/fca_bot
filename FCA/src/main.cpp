@@ -10,8 +10,8 @@
 const int HUMIDIFIER_RELAY_PIN = 14;
 const int HUMIDIFIER_ON_STATE = LOW; // Assumes Active-LOW.
 const int HUMIDIFIER_OFF_STATE = !HUMIDIFIER_ON_STATE;
-const float HUMIDITY_LOW_THRESHOLD  = 50.0; // Turn ON below this
-const float HUMIDITY_HIGH_THRESHOLD = 60.0; // Turn OFF above this
+const float HUMIDITY_LOW_THRESHOLD  = 45.0; // Turn ON below this
+const float HUMIDITY_HIGH_THRESHOLD = 50.0; // Turn OFF above this
 
 // --- Random Cycle Relays (GPIO 25 & 26) ---
 const int RELAY_RANDOM_1 = 25;
@@ -82,7 +82,7 @@ void setup() {
   
   // --- Initialize Random Number Generator ---
   randomSeed(analogRead(0));
-  currentRandomOffTime = random(5, 8) * 60 * 1000; // First OFF period: 5-7 mins
+  currentRandomOffTime = random(2, 3) * 60 * 1000; // First OFF period: 5-7 mins
   Serial.printf("✓ Random cycle seeded. First OFF period: %lu ms\n", currentRandomOffTime);
 
   // --- Initialize SHT31 Sensors ---
@@ -186,7 +186,7 @@ void handleRandomCycleRelays(unsigned long currentTime) {
     relayRandomLastChangeTime = currentTime;
     digitalWrite(RELAY_RANDOM_1, RANDOM_RELAY_ON_STATE);
     digitalWrite(RELAY_RANDOM_2, RANDOM_RELAY_ON_STATE);
-    currentRandomOnTime = random(60, 91) * 1000; // 60-90 seconds ON
+    currentRandomOnTime = random(30, 45) * 1000; // 60-90 seconds ON
     Serial.printf(">>> RANDOM CYCLE: Relays 25 & 26 are now ON for %lu ms\n", currentRandomOnTime);
   }
   // Check if it's time to turn OFF
@@ -195,7 +195,7 @@ void handleRandomCycleRelays(unsigned long currentTime) {
     relayRandomLastChangeTime = currentTime;
     digitalWrite(RELAY_RANDOM_1, RANDOM_RELAY_OFF_STATE);
     digitalWrite(RELAY_RANDOM_2, RANDOM_RELAY_OFF_STATE);
-    currentRandomOffTime = random(5, 8) * 60 * 1000; // 5-7 minutes OFF
+    currentRandomOffTime = random(7, 9) * 60 * 1000; // 5-7 minutes OFF
     Serial.printf(">>> RANDOM CYCLE: Relays 25 & 26 are now OFF for %lu ms\n", currentRandomOffTime);
   }
 }
